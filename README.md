@@ -55,7 +55,7 @@ The library will raise:
 
 ## Note
 
-This library is intended to satirize a concept, not the actual point of this view.
+This library is intended to satirize a point of view, not to actually express this.
 
 ## License
 
