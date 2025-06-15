@@ -1,9 +1,14 @@
-from .all_name import get_name_usages
+# __init__.py
+from .all_name import get_name_usages_with_location
 from .invalid_name import _is_illegal_name
 import os
 import codecs
-from typing import List
 import __main__
+import sys
+import types
+import linecache
+import inspect
+from typing import List, Dict, Tuple
 
 def detect_file_encodings(file_path: str) -> List[str]:
     if not os.path.exists(file_path):
@@ -25,23 +30,34 @@ def detect_file_encodings(file_path: str) -> List[str]:
             with open(file_path, 'r', encoding=encoding) as f:
                 f.read()
             successful_encodings.append(encoding)
-        except Exception as e:
+        except Exception:
             continue
     
-    if not successful_encodings:
-        return []
-    else:
-        return successful_encodings
+    return successful_encodings or []
+
+def raise_name_error_with_frame(name: str, filename: str, line_no: int):
+    line = linecache.getline(filename, line_no).strip()
+    sys.stderr.write(f"""Traceback (most recent call last):
+  File "{__main__.__file__}", line {line_no}, in <module>
+    {line}
+NameError: name '{name}' is illegal. Please don't try to define a female.""")
     
+    sys.exit(1)
+
 if hasattr(__main__, "__file__"):
-    all_name = set()
-    for i in detect_file_encodings(__main__.__file__):
-        with open(__main__.__file__) as f:
+    filename = __main__.__file__
+    
+    for encoding in detect_file_encodings(filename):
+        with open(filename, 'r', encoding=encoding) as f:
             try:
-                analyse = get_name_usages(f.read())
-                all_name |= set(analyse[0]) | set(analyse[1])
+                code = f.read()
+                name_info = get_name_usages_with_location(code)
+                for name, (line_no, _) in name_info.items():
+                    if name not in name_locations:
+                        name_locations[name] = line_no
             except Exception:
-                pass
-    for i in all_name:
-        if _is_illegal_name(i):
-            raise NameError(f"name '{i}' is illegal. Please don't try to define a female.")
+                continue
+    
+    for name, line_no in name_locations.items():
+        if _is_illegal_name(name):
+            raise_name_error_with_frame(name, filename, line_no)
