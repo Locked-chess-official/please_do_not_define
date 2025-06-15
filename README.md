@@ -1,6 +1,8 @@
 # please_do_not_define
 Python library that prevents you from defining variables, functions or classes with names that contain female-related terms.
 Now that a small number of women declare that they are undefinedable. The library will make sure that you won't offend them.
+![IDLE Shell 3 13 5 2025_6_15 15_11_30](https://github.com/user-attachments/assets/84e97919-4842-4b3c-a809-8f32f9e2aa86)
+
 
 ## Installation
 
