@@ -55,7 +55,7 @@ The library will raise:
 
 ## Note
 
-This library is meant for educational or demonstration purposes regarding code naming conventions. Use responsibly and consider the context of your project's requirements.
+This library is intended to satirize a concept, not the actual effect.
 
 ## License
 
