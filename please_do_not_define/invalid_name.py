@@ -9,4 +9,6 @@ def _is_illegal_name(name: str) -> bool:
         return False
     if name.lower() in ("she", "her"):
         return True
-    return any(i.lower() in name.lower() for i in _illegal_name)
+    return any(i.lower() in name.lower()
+               if i not in ("Miss", "Mrs") else
+               i in name for i in _illegal_name)
