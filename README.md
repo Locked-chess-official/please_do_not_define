@@ -53,6 +53,15 @@ The library will raise:
 
 `NameError: name 'print_girl_name' is illegal. Please don't try to define a female.`
 
+## bin
+
+The bin name is `checkname`, the usage is as follows:
+
+- `checkname filename` check whether your filename has the illegal name
+- `checkname -s code` check whether your input code has the illegal name
+- `checkname -v` show the version of the library
+- `checkname -h` show the help information
+
 ## Note
 
 This library is intended to satirize a point of view, not to actually express this.
