@@ -46,7 +46,7 @@ NameError: name '{name}' is illegal. Please don't try to define a female.""")
 
 if hasattr(__main__, "__file__"):
     filename = __main__.__file__
-    
+    name_locations = {}
     for encoding in detect_file_encodings(filename):
         with open(filename, 'r', encoding=encoding) as f:
             try:
@@ -61,3 +61,4 @@ if hasattr(__main__, "__file__"):
     for name, line_no in name_locations.items():
         if _is_illegal_name(name):
             raise_name_error_with_frame(name, filename, line_no)
+
