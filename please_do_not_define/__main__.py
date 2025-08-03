@@ -43,14 +43,14 @@ please ensure:
     1 the file is exist and encode with "utf-8"
     2 the file is a python code""")
 
-elif len(sys.argv) == 3 and sys.argv[0] == "-s":
+elif len(sys.argv) == 3 and sys.argv[1] == "-s":
     try:
         illegal_name_dict = analyse_code(sys.argv[2])
         if len(illegal_name_dict) == 0:
             print("no illegal name")
         else:
             print("found the illegal name below:", end="\n\n", file=sys.stderr)
-            for key, value in illegal_name_dict:
+            for key, value in illegal_name_dict.items():
                 print("name", key, "at",
                 "input", "line",
                 value[0], "offset", value[1], file=sys.stderr)
