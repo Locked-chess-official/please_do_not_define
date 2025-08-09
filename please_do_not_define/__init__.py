@@ -46,19 +46,19 @@ NameError: name '{name}' is illegal. Please don't try to define a female.""")
 
 if hasattr(__main__, "__file__"):
     filename = __main__.__file__
-    name_locations = {}
-    for encoding in detect_file_encodings(filename):
-        with open(filename, 'r', encoding=encoding) as f:
-            try:
-                code = f.read()
-                name_info = get_name_usages_with_location(code)
-                for name, (line_no, _) in name_info.items():
-                    if name not in name_locations:
-                        name_locations[name] = line_no
-            except Exception:
-                continue
-    
-    for name, line_no in name_locations.items():
-        if _is_illegal_name(name):
-            raise_name_error_with_frame(name, filename, line_no)
-
+    if ".exe" not in filename: # script path problem: "*.exe/__main__.py"       
+        name_locations = {}
+        for encoding in detect_file_encodings(filename):
+            with open(filename, 'r', encoding=encoding) as f:
+                try:
+                    code = f.read()
+                    name_info = get_name_usages_with_location(code)
+                    for name, (line_no, _) in name_info.items():
+                        if name not in name_locations:
+                            name_locations[name] = line_no
+                except Exception:
+                    continue
+        
+        for name, line_no in name_locations.items():
+            if _is_illegal_name(name):
+                raise_name_error_with_frame(name, filename, line_no)
